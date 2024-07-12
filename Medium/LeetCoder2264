@@ -1,0 +1,27 @@
+class Solution:
+     def largestGoodInteger(self, num: str) -> str:
+        goodinteger = -1
+        res=""
+        l=0
+        r=1
+        index = 0
+        while l<=r and r<len(num):
+            if num[l]==num[r]:
+                if r-l+1 == 3:
+                    if int(num[r]) > goodinteger:
+                            goodinteger=int(num[r])
+                            index=r
+                r+=1
+            else:
+                l=r
+                r+=1
+            
+        
+        if goodinteger !=-1:
+            res= num[index]*3
+
+        return res
+     
+sol = Solution()
+num ="42352338"
+print(sol.largestGoodInteger(num))

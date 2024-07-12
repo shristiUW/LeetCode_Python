@@ -1,0 +1,23 @@
+#1074. Number of Submatrices That Sum to Target
+from typing import List
+class Solution:
+    def numSubmatrixSumTarget(self, matrix: List[List[int]], target: int) -> int:
+        row=len(matrix )
+        col= len(matrix[0])
+        ans=0
+        for r in range(row):
+            for c in range(col):
+                count=0
+                count+=matrix[r][c]
+                if count==0:
+                        ans+=1
+                for r1 in range(r,row):
+                    for c1 in range(c,col):
+                        count+=matrix[r1][c1]
+                        if count==0:
+                            ans+=1
+        return ans
+sol= Solution()
+matrix = [[1,-1],[-1,1]]
+target = 0
+print(sol.numSubmatrixSumTarget(matrix,target))

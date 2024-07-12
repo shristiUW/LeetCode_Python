@@ -1,0 +1,29 @@
+from typing import List
+class Solution:
+    def findErrorNums(self, nums: List[int]) -> List[int]:
+        """hashmap= Counter(nums)
+        res=[0,0]
+        for i in range(len(nums)+1):
+            if hashmap[i]==2:
+                res[0]=i
+            if i not in hashmap:
+                res[1]=i
+        return res"""
+        res=[]
+        for n in nums:
+            n= abs(n)
+            if nums[n-1] < 1:           
+                res.append(n)            
+            nums[n-1]= -nums[n-1]
+        for i,n in enumerate(nums):
+            if n>0 and i+1!= res[0]:
+                res.append(i+1)
+        
+        return res
+
+
+sol = Solution()
+nums = [1,2,2,4]
+print(sol.findErrorNums(nums))
+          
+

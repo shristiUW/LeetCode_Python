@@ -1,0 +1,19 @@
+def count_pairs_complete_day(hours):
+    count=0
+    hashmap={}
+    for i in range(len(hours)):
+        if hours[i] not in hashmap:
+            hashmap[hours[i]]=1
+        else:
+            hashmap[hours[i]]+=1
+
+    for key,val in hashmap.items():
+        if (hashmap[key]*val)%24==0:
+                count+=val/2
+    return count
+# Example usage:
+hours1 = [12, 12, 30, 24, 24]
+hours2 = [72, 48, 24, 3]
+
+print(count_pairs_complete_day(hours1))  # Output: 2
+print(count_pairs_complete_day(hours2))  # Output: 1

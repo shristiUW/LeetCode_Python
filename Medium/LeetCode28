@@ -1,0 +1,14 @@
+class Solution:
+    def strStr(self, haystack: str, needle: str) -> int:
+        if len(needle)>len(haystack):
+            return -1 
+        
+        for i in range(len(haystack)):
+            string=""
+            for j in range(len(needle)):
+                string+=haystack[j]
+            if string==needle:
+                return i
+        return -1
+sol=Solution()
+print(sol.strStr("hello","ll"))

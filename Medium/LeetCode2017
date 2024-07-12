@@ -1,0 +1,21 @@
+from typing import List
+class Solution:
+    def gridGame(self, grid: List[List[int]]) -> int:
+        N = len(grid[0]) #no of columns
+        prefixrow1, prefixrow2 =grid[0].copy(),grid[1].copy()
+        res=float("inf")
+        for i in range(1,N):
+            prefixrow1[i]+=prefixrow1[i-1]
+            prefixrow2[i]+=prefixrow2[i-1]
+        for i in range(N):
+            top=prefixrow1[-1]- prefixrow1[i]
+            bottom =prefixrow2[i-1] if i>0 else 0
+            robot2 = max(top,bottom)
+            res=min(res,robot2)
+        return res
+# Example usage
+grid = [[2, 5, 4], [1, 5, 1]]
+sol = Solution()
+print(sol.gridGame(grid))  # Output should be 4
+
+

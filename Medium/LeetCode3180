@@ -1,0 +1,43 @@
+from typing import List
+class Solution:
+    def maxTotalReward(self, rewardValues: List[int]) -> int:
+        """rewardValues.sort()  
+        memo ={}
+        #choose not choose
+        def dfs(i:int, prev:int) -> int:
+            if i>=len(rewardValues):
+                return 0
+            if (i,prev) in memo:
+                return memo[(i,prev)]
+            pick=0
+            if rewardValues[i]>prev:
+                pick  = rewardValues[i]+ dfs(i+1,prev+rewardValues[i])
+            notpick = dfs(i+1,prev)
+            memo[(i,prev)]= max(pick, notpick)
+            return memo[(i,prev)]
+        return dfs(0,0)"""
+        total_reward_possible = sum(rewardValues)
+        dp=[[0 for i in range(total_reward_possible+1)]for i in range(len(rewardValues)+1)]
+      
+        prev=0
+        pick=0
+        rewardValues.sort() 
+        for i in range(len(rewardValues)-1,-1,-1):
+             for j in range(total_reward_possible):              
+                if rewardValues[i]>prev:
+                    pick  = rewardValues[i]+ dp[i+1][prev+rewardValues[i]]
+                notpick = dp[i+1][prev]            
+                dp[i][j]= max(pick,notpick)
+        return dp[0][0]
+    
+sol = Solution()
+nums=[1,6,4,3,2]
+print(sol.maxTotalReward(nums))
+        
+
+
+
+
+        
+
+            

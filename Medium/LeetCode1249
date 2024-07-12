@@ -1,0 +1,30 @@
+#1249. Minimum Remove to Make Valid Parentheses
+class Solution:
+    def minRemoveToMakeValid(self, s: str) -> str:
+        #closing paranthesis
+        stack=[]
+        stackindex=[]
+        s_list=list(s)
+        print(s_list)
+        for i in range(len(s_list)):
+            if s_list[i]=='(':
+                stack.append('(')
+                stackindex.append(i)
+            elif s_list[i]==')':
+                if len(stack)>0 and stack[-1]=='(':
+                    stack.pop()
+                    stackindex.pop()
+                else:
+                    stackindex.append(i)
+        if len(stackindex)>0:
+             for i in range(len(stackindex)-1,-1,-1):
+                s_list.pop(stackindex[i])
+        return "".join(s_list)
+
+sol= Solution()
+print(sol.minRemoveToMakeValid("lee(t(c)o)de)"))
+
+
+       
+                    
+                

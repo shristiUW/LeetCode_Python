@@ -1,0 +1,15 @@
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+         #hashmap+bucketsort
+        Bucket=[[] for i in range(len(nums)+1)]
+        output=[]
+        count={}
+        for n in nums:
+            count[n]=1+count.get(n, 0)
+        for key, val in count.items():
+            Bucket[val].append(key)
+        for i in range(len(Bucket)-1,-1,-1):
+            for num in Bucket[i]:
+                output.append(num)
+                if len(output)==k:
+                    return output

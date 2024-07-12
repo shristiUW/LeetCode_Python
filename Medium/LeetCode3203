@@ -1,0 +1,100 @@
+#3203. Find Minimum Diameter After Merging Two Trees
+from collections import deque,defaultdict
+from typing import List, Dict,Tuple
+class Solution:
+    """def bfs_farthest(self,node:int,tree:Dict[int,List[int]])-> Tuple[int,int]:
+        queue = deque([(node,0)]) # Start BFS with the starting node and distance 0
+        visited ={node}  # Set to keep track of visited nodes
+        farthest_node, max_dist=node,0 # Initialize farthest node and max distance
+        while queue:
+            current, dist= queue.popleft() # Get the current node and its distance
+            if dist > max_dist:  # If current distance is greater than max distance
+                farthest_node, max_dist =  current, dist # Update farthest node and max distance
+            for neighbor in tree[current]: # Traverse all neighbors of the current node
+                if neighbor not in visited:  # If the neighbor has not been visited
+                    visited.add(neighbor) # Mark the neighbor as visited
+                    queue.append((neighbor,dist+1)) # Add the neighbor to the queue with incremented distance
+        return farthest_node,max_dist # Return the farthest node and its distance
+    
+
+
+    def findDiameter(self,tree:dict[int,List[int]])->int:
+        startnode=next(iter(tree)) # Pick an arbitrary starting node
+        farthestnode,maxdist= self.bfs_farthest(startnode,tree)
+        _,diameter=self.bfs_farthest(farthestnode,tree)
+        return diameter
+    
+    def maxdistance_for_each_node(self,tree:dict[int:list[int]],n:int)->int:
+        max_dists={}
+        for i in range(n):
+            _,dist=self.bfs_farthest(i,tree)
+            max_dists[i]=dist
+        return max_dists
+
+
+
+
+    def minimumDiameterAfterMerge(self, edges1: List[List[int]], edges2: List[List[int]]) -> int:
+        tree1= defaultdict(list)
+        tree2= defaultdict(list)
+
+        for a,b in edges1:
+            tree1[a].append(b)
+            tree1[b].append(a)
+        for a,b in edges2:
+            tree2[a].append(b)
+            tree2[b].append(a)
+        
+        d1= self.findDiameter(tree1)
+        d2=self.findDiameter(tree2)
+
+
+        max_dists1=self.maxdistance_for_each_node(tree1,len(tree1))
+        max_dists2=self.maxdistance_for_each_node(tree2,len(tree2))
+        min_diameter=float('inf')
+        for node1 in range(len(tree1)):
+             for node2 in range(len(tree2)):
+                 new_diameter=max(d1,d2,max_dists1[node1]+max_dists2[node2]+1)
+                 min_diameter=min(new_diameter,min_diameter)
+        return min_diameter
+        return max(d1, d2, 1+(d1+1)//2+(d2+1)//2)"""
+
+    def bfs(self,node:int, tree:Dict[int,List[int]])->Tuple[int, int]:
+        queue= deque([(node,0)])
+        visited={node}
+        farthest_node, max_dist=node,0
+        while queue:
+            current_node,dist = queue.popleft()
+            if dist > max_dist:
+                max_dist=dist
+                farthest_node=current_node
+            for neighbor in tree[current_node]:
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    queue.append((neighbor,dist+1))
+        return farthest_node, max_dist
+    def finddiameter(self,tree:Dict[int,List[int]])->int:
+        farthestnode,maxdist=self.bfs(0,tree)
+        _,diameter= self.bfs(farthestnode,tree)
+        return diameter
+    def minimumDiameterAfterMerge(self, edge1:List[List[int]], edge2:List[List[int]])->int:
+        tree1=defaultdict(list)
+        tree2= defaultdict(list)
+        for edge in edge1:
+            tree1[edge[0]].append(edge[1])
+            tree1[edge[1]].append(edge[0])
+        for edge in edge2:
+            tree2[edge[0]].append(edge[1])
+            tree2[edge[1]].append(edge[0])
+        d1=self.finddiameter(tree1)
+        d2=self.finddiameter(tree2)
+        return max(d1, d2, 1+(d1+1)//2+(d2+1)//2)
+
+# Example usage:
+solution = Solution()
+edges1 = [[0, 1], [0, 2], [0, 3], [2, 4], [2, 5], [3, 6], [2, 7]]
+edges2 = [[0, 1], [0, 2], [0, 3], [2, 4], [2, 5], [3, 6], [2, 7]]
+print(solution.minimumDiameterAfterMerge(edges1, edges2))  # Output should be 5
+        
+
+

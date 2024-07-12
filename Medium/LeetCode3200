@@ -1,0 +1,34 @@
+#3200. Maximum Height of a Triangle
+class Solution:
+    def maxHeightOfTriangle(self, red: int, blue: int) -> int:
+        def check(a,b):
+            l=1
+            flag=0
+            height=0
+            while a>0 or b>0:
+                if flag==0:
+                    if a>=l:
+                        a-=l
+                    else:
+                        break
+                else:
+                    if b>=l:
+                        b-=l
+                    else:
+                        break
+                l+=1
+                flag=flag^1
+                height+=1
+            return height
+        
+        return max(check(red,blue),check(blue,red))
+
+sol=Solution()
+print(sol.maxHeightOfTriangle(2,4))
+
+
+            
+            
+
+                    
+

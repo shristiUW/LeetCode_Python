@@ -1,0 +1,14 @@
+from typing import List
+
+
+class Solution:
+    def findRepeatedDnaSequences(self,s:str)->List[str]:
+        output= set()
+        hashset= set()
+        for i in range(len(s)-9):
+            curr = s[i:i+10]
+            if curr in hashset:
+                output.add(curr)
+            hashset.add(curr)
+sol= Solution()
+print(sol.findRepeatedDnaSequences("AAAAAAAAAAA"))

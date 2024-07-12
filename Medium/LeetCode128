@@ -1,0 +1,22 @@
+from typing import List
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+     
+        countmax=1
+        count=1
+        if len(nums)==0:
+            return 0
+        nums.sort()
+        for r in range(1,len(nums)):
+            if nums[r]==nums[r-1]: 
+                continue
+            elif nums[r]==1+nums[r-1]:         
+                countmax=max(countmax,count+1)
+            else:
+                count=1
+
+        return countmax
+ # Example usage:
+sol = Solution()
+nums = [2,20,4,10,3,4,5]
+print(sol.longestConsecutive(nums))    

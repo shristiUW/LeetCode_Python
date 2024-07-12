@@ -1,0 +1,21 @@
+# 3201. Find the Maximum Length of Valid Subsequence I
+from typing import List
+class Solution:
+    def maximumLength(self, nums: List[int]) -> int:
+        even = 0
+        odd = 0
+        both = 1
+        flip = 1-(nums[0]%2)
+        for n in nums:
+            if n%2==0:
+                even+=1
+            else:
+                odd+=1
+            if n%2==flip:
+                both+=1
+                flip=1-flip
+        return max(odd, max(odd,even))
+
+sol= Solution()
+print(sol.maximumLength([1,2,1,1,2,1,2]))
+

@@ -1,0 +1,22 @@
+from typing import List
+class Solution:
+    def missingNumber(self, nums: List[int]) -> int:
+        n=len(nums)
+        x=len(nums)+1
+        for i in range(n):
+            index=abs(nums[i])
+            if index<n and nums[index]==0:
+                nums[index]=x
+            if index<n:            
+                nums[index] =(-1)* (nums[index])
+            if index==x:
+                 nums[0] =(-1)* (nums[0])
+
+        for i in range(n):
+            if nums[i]>=0:
+                return i
+        return n
+
+sol=Solution()
+nums=[2,0]
+sol.missingNumber(nums)

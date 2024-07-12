@@ -1,0 +1,23 @@
+from typing import List  # Import the List type from the typing module
+class Solution:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        k = 0
+        for i in range(len(nums)):
+            if nums[i] != val:
+                nums[k] = nums[i]
+                k += 1
+        return k
+
+# Example usage
+sol = Solution()
+nums = [3, 2, 2, 3]
+val = 3
+print(sol.removeElement(nums, val))  # Output should be 2
+print(nums[:sol.removeElement(nums, val)])  # Outputs the modified list: [2, 2]
+
+# Test case 2
+nums = [0, 1, 2, 2, 3, 0, 4, 2]
+val = 2
+new_length = sol.removeElement(nums, val)
+print(new_length)  # Expected output: 5 (the number of elements that aren't 2)
+print(nums[:new_length])

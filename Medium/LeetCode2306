@@ -1,0 +1,36 @@
+from typing import List
+from collections import defaultdict
+class Solution:
+    def distinctNames(self, ideas: List[str]) -> int:
+        #Time exceed error
+        """hashset = set(ideas)
+        count=0
+        for idea1 in ideas:
+            for idea2 in ideas:
+                companyname1= idea2[0:1] + idea1[1:len(idea1)]
+                companyname2= idea1[0:1] + idea2[1:len(idea2)]
+                if companyname1 not in hashset and companyname2 not in hashset:
+                    count+=2
+        return count"""
+        #making hashmap where key is first character and value is set of suffixes starting from that character
+        hashmap= defaultdict(set)
+        res=0
+        for w in ideas:
+            hashmap[w[0]].add(w[1:])
+        for w1 in hashmap:
+            for w2 in hashmap:
+                if w1 == w2:
+                    continue
+                intersect =0
+                for suffix in hashmap[w1]:
+                    if suffix in hashmap[w2]:
+                        intersect+=1
+                distinctw1 = len(hashmap[w1])-intersect
+                distinctw2 = len(hashmap[w2])-intersect
+                res += distinctw1*distinctw2
+        return res
+
+
+
+sol = Solution()
+print(sol.distinctNames(["coffee","donuts","time","toffee"]))

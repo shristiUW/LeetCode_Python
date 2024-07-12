@@ -1,0 +1,54 @@
+#3213. Construct String with Minimum Cost
+
+from typing import List
+
+
+class TrieNode:
+    def __init__(self):
+        self.children={}
+        self.endofwrd=False
+        self.cost=float('inf')
+class Solution:
+    def __init__(self):
+        self.root= TrieNode()
+    def insert(self,word:str,cost:int):
+        curr= self.root
+        for c in word:
+            if c not in curr.children:
+                curr.children[c] = TrieNode()
+            curr = curr.children[c]
+        curr.endofwrd=True
+        curr.cost=min(curr.cost,cost)
+    def dfs(self,i:int,target:str, costs:List[int]):
+        if i>= len(target):
+            return 0
+        curr = self.root
+        mincost= float('inf')
+        for j in range(i,len(target)):
+            if target[j] not in curr.children:
+                break
+            curr=curr.children[target[j]]
+            if curr.endofwrd:
+                cost= curr.cost
+                mincost = min(mincost,cost+ self.dfs(j+1,target,costs))
+        return mincost
+    
+    def minimumCost(self,i:int,target:str,words:List[str],costs:List[int])->int:
+        ans=float('inf')
+        for i,w  in enumerate(words):
+            self.insert(w,costs[i])
+        ans= self.dfs(0,target,costs)
+        return ans if ans!=float('inf') else -1
+
+
+# Test the solution
+solution = Solution()
+target = "zpeapbke"
+words = ["zpeapbke","z"]
+costs = [8,1]
+print(solution.minimumCost(0,target, words, costs))  # Expected Output: 1
+
+
+            
+
+

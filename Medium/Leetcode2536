@@ -1,0 +1,20 @@
+# 2536. Increment Submatrices by One
+# Method - PrefixSum
+from typing import List
+class Solution:
+    def rangeAddQueries(self,n:int, queries:List[List[int]])->List[List[int]]:
+        ans=[[0 for _ in range(n)] for _ in range(n)]
+        for query in queries:
+            r1= query[0]
+            c1=query[1]
+            r2=query[2]
+            c2=query[3]
+            for r in range(r1,r2+1):
+                ans[r][c1]+=1
+                if c2+1<n:
+                    ans[r][c2+1]-=1
+        for r in range(n):
+            for c in range(1,n):
+                ans[r][c]+=ans[r][c-1]
+sol= Solution()
+print(sol.rangeAddQueries(3,[[1,1,2,2],[0,0,1,1]]))
